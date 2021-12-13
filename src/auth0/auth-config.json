@@ -1,0 +1,9 @@
+{
+  "domain": "dev-1qkunb76.us.auth0.com",
+  "clientId": "aTbMckRBFJJYehyee1dWLXZH9vkpEKVn",
+  "audience": "https://express.sample",
+  "serverUrl": "http://localhost:6060",
+  "apiUri": "http://localhost:3001",
+  "appUri": "http://localhost:4200",
+  "errorPath": "/error"
+}
