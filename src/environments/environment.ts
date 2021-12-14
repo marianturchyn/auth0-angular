@@ -4,7 +4,7 @@
 import config from 'src/auth0/auth-config.json';
 import { AuthConfig } from '@auth0/auth0-angular';
 
-const { domain, clientId, audience, apiUri, errorPath }: AuthConfig = config;
+const { domain, clientId, audience, apiUri, errorPath, callbackURL }: AuthConfig = config;
 
 export const environment = {
   production: false,
@@ -14,6 +14,7 @@ export const environment = {
     ...(audience && audience !== 'YOUR_API_IDENTIFIER' ? { audience } : null),
     redirectUri: window.location.origin,
     errorPath,
+    callbackURL,
   },
   httpInterceptor: {
     allowedList: [`${apiUri}/*`],

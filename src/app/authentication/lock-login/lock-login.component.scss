@@ -1,0 +1,7 @@
+:host {
+  ::ng-deep {
+    .auth0-lock-close-button {
+      z-index: 99999;
+    }
+  }
+}
