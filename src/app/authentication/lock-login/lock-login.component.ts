@@ -11,7 +11,7 @@ import { Auth0Lock } from 'auth0-lock';
 })
 export class LockLoginComponent {
   auth0Options = {
-    closable: false,
+    closable: true,
     theme: {
       primaryColor: '#DFA612'
     },
