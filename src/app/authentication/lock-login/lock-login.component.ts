@@ -11,11 +11,12 @@ import { Auth0Lock } from 'auth0-lock';
 })
 export class LockLoginComponent {
   auth0Options = {
-    closable: true,
+    closable: false,
     theme: {
       primaryColor: '#DFA612'
     },
     auth: {
+      redirect: false,
       redirectUrl: environment.auth.callbackURL,
       responseType: 'token id_token',
       audience: `https://${environment.auth.domain}/userinfo`,
@@ -23,7 +24,50 @@ export class LockLoginComponent {
         scope: 'openid profile email'
       }
     },
+    additionalSignUpFields: [
+      {
+        name: 'address',
+        placeholder: 'enter your address',
+        // The following properties are optional
+        ariaLabel: 'Address',
+        icon: 'https://example.com/assets/address_icon.png',
+        prefill: 'street 123',
+        validator: function (address) {
+          return {
+            valid: address.length >= 10,
+            hint: 'Must have 10 or more chars' // optional
+          };
+        }
+      },
+      {
+        type: 'select',
+        name: 'location',
+        placeholder: 'choose your location',
+        options: [
+          { value: 'us', label: 'United States' },
+          { value: 'fr', label: 'France' },
+          { value: 'ar', label: 'Argentina' }
+        ],
+        // The following properties are optional
+        ariaLabel: 'Location',
+        icon: 'https://example.com/assets/location_icon.png',
+        prefill: 'us'
+      },
+      {
+        type: 'checkbox',
+        name: 'newsletter',
+        prefill: 'true',
+        placeholder: 'I hereby agree that I want to receive marketing emails from your company',
+        // placeholderHTML - is an optional field and overrides the value of placeholder
+        // do not use user inputted data for HTML fields as they are vulnerable to XSS
+        placeholderHTML:
+          '<b>I hereby agree that I want to receive marketing emails from your company</b>',
+        // ariaLabel - is an optional field
+        ariaLabel: 'Activate Newsletter'
+      }
+    ],
     autoclose: true,
+    showTerms: true,
     useRefreshTokens: true,
     cacheLocation: "localstorage"
   };
