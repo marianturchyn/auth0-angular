@@ -24,8 +24,8 @@ export class LockLoginComponent {
       }
     },
     autoclose: true,
-    //useRefreshTokens: true,
-    //cacheLocation: "localstorage"
+    useRefreshTokens: true,
+    cacheLocation: "localstorage"
   };
 
   lock = new Auth0Lock(
@@ -37,21 +37,31 @@ export class LockLoginComponent {
   profile;
 
   constructor(private router: Router, private http: HttpClient) {
-    // this.lock.getUserInfo(accessToken, function(error, profile) {
-    //   if (!error) {
-    //     alert("hello " + profile.name);
-    //   }
-    // });
+    this.lock.checkSession({}, (error, authResult) => {
+      if (error || !authResult) {
+        this.lock.show();
+      } else {
+        // user has an active session, so we can use the accessToken directly.
+        this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
+          if (error) {
+            console.log(error);
+            return;
+          };
 
-    console.log(this.lock);
-
+          console.log(authResult.accessToken);
+          console.log(profile);
+          this.profile = profile;
+        });
+      }
+    });
 
     this.lock.on("authenticated", (authResult: any) => {
       this.lock.getProfile(authResult.accessToken, async (error: any, profile: any) => {
         if (error) throw new Error('error');
         // code
 
-console.log(profile);
+        console.log(authResult.accessToken);
+        console.log(profile);
         this.profile = profile;
       });
     });
@@ -60,9 +70,9 @@ console.log(profile);
   login() {
     this.lock.show()
   }
+
   logout() {
     this.lock.logout();
-    //code
   }
 
 }

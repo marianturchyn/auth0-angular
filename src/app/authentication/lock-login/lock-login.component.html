@@ -1,7 +1,7 @@
 <h2>Lock Login</h2>
-<button *ngIf="!profile; else logout" (click)="login()">Lock Login</button>
+<button *ngIf="!profile; else logoutTpl" (click)="login()">Lock Login</button>
 
-<ng-template #logout>
+<ng-template #logoutTpl>
   {{profile.email}}<br>
   <button (click)="logout()">Lock Logout</button>
 </ng-template>
